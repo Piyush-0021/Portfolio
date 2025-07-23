@@ -10,19 +10,12 @@ AI-Powered Applications leveraging Python, scikit-learn, and clustering algorith
 End-to-End Cloud Deployments using IBM Cloud, Vercel, and Supabase
 
 
-🔥 Featured Projects:
-FitLife – A comprehensive fitness platform (built with PHP) featuring workout plans, yoga schedules, and personalized health guidance.
-
-Movie Recommender – An unsupervised machine learning system using KMeans and genre parsing to recommend Indian movies.
-
-BidHive – A full-stack B2B tender management system with company registration, tender workflows, JWT authentication, and Supabase backend.
-
-
 🧠 Skills & Tools:
 Languages: JavaScript (ES6+), TypeScript, PHP, Python
 Frameworks: React.js, Next.js, Express.js
 Databases: MySQL, Supabase, MongoDB
 Dev Tools: GitHub, Vercel, IBM Cloud CLI, Postman
 Other: JWT Auth, API Integration, UI/UX Animation, Tailwind CSS, Chart.js
+
 🌐 Let’s Connect!
 I’m always open to collaboration, internships, or freelance projects. Check out my repos, contribute, or drop a message!
