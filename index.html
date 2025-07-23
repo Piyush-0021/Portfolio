@@ -1,0 +1,1737 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Piyush Gupta - Full Stack Developer & AI Enthusiast Portfolio">
+  <title>Piyush Gupta | Full Stack Developer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gltf-loader@1.0.0/GLTFLoader.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <style>
+   @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Source+Code+Pro:wght@400;600&display=swap');
+   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+    :root {
+      --primary: #00ffe7;
+      --primary-dark: #00bfa5;
+      --bg-dark: #0a192f;
+      --bg-light: #172a45;
+      --text-light: #ccd6f6;
+      --text-dark: #8892b0;
+      --transition: all 0.3s ease-in-out;
+      --easing: cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Source Code Pro', monospace;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      scroll-behavior: smooth;
+      line-height: 1.6;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      background-color: rgba(10, 25, 47, 0.9);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      transition: var(--transition);
+    }
+
+    .navbar.scrolled {
+      padding: 1rem 3rem;
+      box-shadow: 0 10px 30px -10px rgba(2, 12, 27, 0.7);
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.5rem;
+      text-decoration: none;
+      background: linear-gradient(90deg, var(--primary), #00bfff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 5s ease infinite;
+      background-size: 200% 200%;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      position: relative;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--primary);
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    /* Hero Section */
+    header {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 0 10%;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      z-index: 2;
+      width: 100%;
+    }
+
+    .hero-content h4 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.2s forwards;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-family: 'Orbitron', sans-serif;
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.4s forwards;
+    }
+
+    .hero-content h1 span {
+      color: var(--primary);
+      position: relative;
+    }
+
+    .hero-content h1 span::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      bottom: -5px;
+      left: 0;
+      background: linear-gradient(90deg, var(--primary), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+
+    .hero-content h1:hover span::after {
+      transform: scaleX(1);
+    }
+
+    .hero-content p {
+      color: var(--text-dark);
+      max-width: 600px;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.6s forwards;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: transparent;
+      color: var(--primary);
+      padding: 0.8rem 1.5rem;
+      border: 1px solid var(--primary);
+      border-radius: 4px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+      margin-right: 1rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.8s forwards;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 231, 0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+
+    .cta-button:hover {
+      background: rgba(0, 255, 231, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 255, 231, 0.3);
+    }
+
+    .cta-button.primary {
+      background: var(--primary);
+      color: var(--bg-dark);
+      font-weight: 600;
+    }
+
+    .cta-button.primary:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 5px 15px rgba(0, 255, 231, 0.5);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease 1s forwards;
+    }
+
+    .social-links a {
+      color: var(--text-light);
+      font-size: 1.3rem;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .social-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--primary);
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      color: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .social-links a:hover::after {
+      width: 100%;
+    }
+
+    /* 3D Hologram Container */
+    .hologram-container {
+      position: absolute;
+      right: 10%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 350px;
+      height: 350px;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.2s forwards;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1200px) {
+      .hologram-container {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin: 3rem auto;
+        width: 280px;
+        height: 280px;
+      }
+    }
+
+    .hologram-frame {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(0, 255, 231, 0.5), 
+                  inset 0 0 20px rgba(0, 255, 231, 0.3);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .hologram-screen {
+      position: absolute;
+      width: 90%;
+      height: 90%;
+      top: 5%;
+      left: 5%;
+      background: rgba(0, 255, 231, 0.05);
+      border-radius: 5px;
+      backdrop-filter: blur(2px);
+      z-index: 1;
+    }
+
+    /* About Section */
+    section {
+      padding: 6rem 10%;
+      position: relative;
+      width: 100%;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 3rem;
+      color: var(--text-light);
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .section-title h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      margin-right: 1rem;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+
+    .section-title h2 span {
+      color: var(--primary);
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: var(--bg-light);
+      margin-left: 1rem;
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 3rem;
+      align-items: center;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.2s forwards;
+    }
+
+    .about-text p {
+      margin-bottom: 1.5rem;
+      color: var(--text-dark);
+    }
+
+    .skills-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(140px, 200px));
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .skills-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      color: var(--text-dark);
+      font-size: 0.9rem;
+      list-style-type: none;
+      transition: var(--transition);
+    }
+
+    .skills-list li:hover {
+      color: var(--primary);
+      transform: translateX(5px);
+    }
+
+    .skills-list li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+    }
+
+    .about-image {
+      position: relative;
+      max-width: 380px;
+      margin: 0 auto;
+      transition: var(--transition);
+    }
+
+    .profile-img {
+      border-radius: 5px;
+      filter: grayscale(100%) contrast(1);
+      transition: var(--transition);
+      box-shadow: 0 10px 30px -10px rgba(0, 255, 231, 0.2);
+      width: 100%;
+      height: auto;
+    }
+
+    .about-image:hover .profile-img {
+      filter: none;
+      transform: scale(1.03);
+    }
+
+    .about-image::after {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--primary);
+      border-radius: 5px;
+      z-index: -1;
+      transition: var(--transition);
+    }
+
+    .about-image:hover::after {
+      top: 10px;
+      left: 10px;
+    }
+
+    /* Skills Section */
+    .skills-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.2s forwards;
+    }
+
+    .skill-card {
+      background-color: var(--bg-light);
+      padding: 1.5rem;
+      border-radius: 5px;
+      text-align: center;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      z-index: -1;
+      background: linear-gradient(45deg, var(--primary), #00bfff, var(--primary));
+      background-size: 400%;
+      border-radius: 6px;
+      opacity: 0;
+      transition: 0.5s;
+    }
+
+    .skill-card:hover::before {
+      opacity: 1;
+      animation: animateBorder 3s linear infinite;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px -10px rgba(0, 255, 231, 0.2);
+      border-color: var(--primary);
+    }
+
+    .skill-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      transition: var(--transition);
+    }
+
+    .skill-card:hover .skill-icon {
+      transform: scale(1.1);
+    }
+
+    .skill-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Projects Section */
+    .projects-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.2s forwards;
+    }
+
+    .project-card {
+      background-color: var(--bg-light);
+      border-radius: 5px;
+      overflow: hidden;
+      transition: var(--transition);
+      position: relative;
+      border: 1px solid transparent;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0, 255, 231, 0.1), transparent);
+      z-index: 1;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px -10px rgba(0, 255, 231, 0.3);
+      border-color: var(--primary);
+    }
+
+    .project-image {
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .project-card:hover .project-image {
+      opacity: 0.2;
+      transform: scale(1.1);
+    }
+
+    .project-content {
+      padding: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .project-content h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-light);
+      transition: var(--transition);
+    }
+
+    .project-card:hover .project-content h3 {
+      color: var(--primary);
+    }
+
+    .project-content p {
+      color: var(--text-dark);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      transition: var(--transition);
+    }
+
+    .project-card:hover .project-content p {
+      color: var(--text-light);
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-tech span {
+      font-size: 0.7rem;
+      color: var(--primary);
+      background-color: rgba(0, 255, 231, 0.1);
+      padding: 0.3rem 0.6rem;
+      border-radius: 3px;
+      transition: var(--transition);
+    }
+
+    .project-card:hover .project-tech span {
+      background-color: rgba(0, 255, 231, 0.3);
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .project-links a {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+    }
+
+    .project-links a:hover {
+      color: var(--primary);
+      transform: translateX(3px);
+    }
+
+    .project-links a i {
+      margin-right: 0.3rem;
+    }
+
+    .project-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: var(--transition);
+      padding: 1.5rem;
+      text-align: center;
+      z-index: 3;
+      background: rgba(10, 25, 47, 0.9);
+    }
+
+    .project-card:hover .project-overlay {
+      opacity: 1;
+    }
+
+    .project-overlay h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .project-overlay p {
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Contact Section */
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.2s forwards;
+    }
+
+    .contact-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-light);
+    }
+
+    .contact-details {
+      margin-bottom: 2rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      color: var(--text-dark);
+      transition: var(--transition);
+    }
+
+    .contact-item:hover {
+      color: var(--text-light);
+      transform: translateX(5px);
+    }
+
+    .contact-item i {
+      margin-right: 1rem;
+      color: var(--primary);
+      font-size: 1.2rem;
+      width: 20px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      background-color: var(--bg-light);
+      border: 1px solid var(--bg-light);
+      border-radius: 4px;
+      color: var(--text-light);
+      transition: var(--transition);
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 10px rgba(0, 255, 231, 0.2);
+    }
+
+    .contact-form textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      background: var(--primary);
+      color: var(--bg-dark);
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      font-weight: 600;
+    }
+
+    .submit-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 255, 231, 0.4);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      font-size: 0.9rem;
+      position: relative;
+      width: 100%;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    footer a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      bottom: -2px;
+      left: 0;
+      background-color: var(--primary);
+      transition: var(--transition);
+    }
+
+    footer a:hover::after {
+      width: 100%;
+    }
+
+    /* Animations */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 20px var(--primary), inset 0 0 20px var(--primary); }
+      50% { box-shadow: 0 0 30px var(--primary), inset 0 0 30px var(--primary); }
+      100% { box-shadow: 0 0 20px var(--primary), inset 0 0 20px var(--primary); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { 
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes animateBorder {
+      0% { background-position: 0 0; }
+      50% { background-position: 400% 0; }
+      100% { background-position: 0 0; }
+    }
+
+    @keyframes codeFade {
+      0% { opacity: 0.2; }
+      50% { opacity: 1; }
+      100% { opacity: 0.2; }
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--primary);
+      font-size: 1.5rem;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+      z-index: 10;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.5s forwards, bounce 2s infinite 1.5s;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+      40% { transform: translateY(-20px) translateX(-50%); }
+      60% { transform: translateY(-10px) translateX(-50%); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      body {
+        overflow-x: hidden;
+      }
+      
+      .navbar {
+        padding: 1rem;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background-color: var(--bg-dark);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+        backdrop-filter: blur(10px);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      header, section {
+        padding: 5rem 1.5rem;
+      }
+
+      .hero-content {
+        text-align: center;
+        align-items: center;
+      }
+      
+      .hero-content .cta-button {
+        margin-bottom: 1rem;
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .skills-list {
+        justify-content: center;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      }
+
+      .about-image {
+        margin: 2rem auto 0;
+        max-width: 300px;
+      }
+
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+
+      .projects-container {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      footer {
+        padding: 1.5rem;
+      }
+      
+      footer p {
+        font-size: 0.8rem;
+      }
+      
+      .hologram-container {
+        width: 250px;
+        height: 250px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header, section {
+        padding: 4rem 1rem;
+      }
+      
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero-content p {
+        font-size: 1rem;
+      }
+      
+      .section-title h2 {
+        font-size: 1.5rem;
+      }
+      
+      .skills-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-form input,
+      .contact-form textarea {
+        padding: 0.7rem;
+      }
+      
+      .submit-btn {
+        width: 100%;
+      }
+      
+      .hologram-container {
+        width: 200px;
+        height: 200px;
+      }
+    }
+
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    #typed-output {
+      display: inline;
+      white-space: nowrap;
+      border-right: 2px solid #fff;
+      padding-right: 5px;
+      font-weight: bold;
+      animation: blink 0.7s step-end infinite;
+      font-size: clamp(1.2rem, 5vw, 2.2rem); 
+    }
+    
+    @keyframes blink {
+      from, to { border-color: transparent }
+      50% { border-color: var(--primary); }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar">
+  <a href="#" class="logo">Piyush</a>
+  <ul class="nav-links">
+    <li><a href="#about" class="active">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="assets/images/PiyushGuptaResume.pdf" download class="cta-button">Resume</a></li>
+  </ul>
+  <button class="mobile-menu-btn">
+    <i class="fas fa-bars"></i>
+  </button>
+</nav>
+
+<!-- Hero Section -->
+<header>
+  <div id="particles-js"></div>
+  <div class="hero-content">
+    <h4>Hi, my name is</h4>
+    <h1>Piyush Gupta.</h1>
+    <h1>
+        <span id="typed-output"></span>
+    </h1>
+    <p>I'm a Full Stack Developer specializing in building (and occasionally designing) exceptional digital experiences. Currently, I'm focused on building accessible, human-centered products at the intersection of technology and design.</p>
+    <div>
+      <a href="#projects" class="cta-button primary">View My Work</a>
+      <a href="#contact" class="cta-button">Get In Touch</a>
+    </div>
+    <div class="social-links">
+      <a href="https://github.com/Piyush-0021/Piyush-0021.github.io" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/piyush-gupta-bab9b7292/?originalSubdomain=in" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://twitter.com/Piyush85369406" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://www.instagram.com/piyush_gupta021/" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-instagram" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+  
+  <!-- 3D Hologram Container -->
+  <div class="hologram-container" id="hologram-container">
+    <canvas id="code-canvas"></canvas>
+  </div>
+  
+  <div class="scroll-indicator">
+    <i class="fas fa-chevron-down"></i>
+  </div>
+</header>
+
+<!-- About Section -->
+<section id="about">
+  <div class="section-title">
+    <h2><span>01.</span> About Me</h2>
+  </div>
+  <div class="about-content">
+    <div class="about-text">
+      <p>Hello! My name is Piyush, and I enjoy creating things that live on the internet.
+        I thrive on transforming ideas into interactive digital experiences. I enjoy designing intuitive web interfaces just as much as I love diving into datasets to uncover patterns and meaningful insights.</p>
+       <p>What excites me most is bringing AI into the mix — integrating intelligent features that adapt, learn, and elevate user experiences. With a solid foundation in programming, algorithms, and analytical thinking, I'm passionate about building web applications that don't just function but also understand and respond dynamically to user needs.
+        I'm always learning new tools, pushing both my creative and logical boundaries, and striving to make an impact through smart, data-driven, user-first development.</p>
+      <p>Here are a few technologies I've been working with recently:</p>
+      <ul class="skills-list">
+        <li>JavaScript (ES6+)</li>
+        <li>React</li>
+        <li>Node.js</li>
+        <li>TypeScript</li>
+        <li>Next.js</li>
+        <li>Python</li>
+        <li>PHP</li>
+        <li>Supabase</li>
+        <li>MySQL</li>
+      </ul>
+    </div>
+    <div class="about-image">
+      <img src="assets/images/Piyush.jpeg" alt="Piyush Gupta" class="profile-img">
+    </div>
+  </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills">
+  <div class="section-title">
+    <h2><span>02.</span> Skills & Expertise</h2>
+  </div>
+  <div class="skills-container">
+    <div class="skill-card">
+      <div class="skill-icon">
+        <i class="fab fa-html5"></i>
+      </div>
+      <h3>Frontend Development</h3>
+      <p>HTML5, CSS3, JavaScript, React, Next.js, Responsive Design, Animations</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">
+        <i class="fas fa-server"></i>
+      </div>
+      <h3>Backend Development</h3>
+      <p>Node.js, Express, PHP, Python, REST APIs, Authentication, Databases</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">
+        <i class="fas fa-database"></i>
+      </div>
+      <h3>Database</h3>
+      <p>MySQL, Supabase, Firebase, ORMs, Schema Design, Optimization</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">
+        <i class="fas fa-robot"></i>
+      </div>
+      <h3>AI/ML</h3>
+      <p>Machine Learning, Data Analysis, Recommendation Systems, TensorFlow Basics</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">
+        <i class="fas fa-mobile-alt"></i>
+      </div>
+      <h3>Mobile Development</h3>
+      <p>React Native, Progressive Web Apps, Mobile-First Design</p>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">
+        <i class="fas fa-tools"></i>
+      </div>
+      <h3>DevOps & Tools</h3>
+      <p>Git, Docker, CI/CD, Testing, Debugging, Performance Optimization</p>
+    </div>
+  </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects">
+  <div class="section-title">
+    <h2><span>03.</span> Featured Projects</h2>
+  </div>
+  <div class="projects-container">
+    <div class="project-card">
+      <img src="assets/images/login_back3.jpg" alt="FitLife" class="project-image">
+      <div class="project-overlay">
+        <h3>FitLife</h3>
+        <p>Responsive fitness platform with workouts, yoga plans, diet modules, session-based PHP login, and dynamic UI for healthy lifestyle tracking.</p>
+        <div class="project-links">
+          <a href="https://fitlife21.great-site.net"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+          <a href="https://github.com/Piyush-0021/fitlife"><i class="fab fa-github"></i> Source Code</a>
+        </div>
+      </div>
+      <div class="project-content">
+        <h3>💪 FitLife</h3>
+        <p>Comprehensive fitness solution with personalized workout plans and progress tracking</p>
+        <div class="project-tech">
+          <span>PHP</span>
+          <span>MySQL</span>
+          <span>JavaScript</span>
+          <span>Bootstrap</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card">
+      <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Movie Recommender" class="project-image">
+      <div class="project-overlay">
+        <h3>Movie Recommender</h3>
+        <p>Unsupervised ML system using KMeans on Indian movie data to recommend films based on genre clusters, vote averages, and popularity.</p>
+        <div class="project-links">
+          <a href="#"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+          <a href="https://github.com/Piyush-0021/movie-recommendation-system"><i class="fab fa-github"></i> Source Code</a>
+        </div>
+      </div>
+      <div class="project-content">
+        <h3>🎬 Movie Recommender</h3>
+        <p>AI-powered recommendation engine for Bollywood and regional Indian cinema</p>
+        <div class="project-tech">
+          <span>Python</span>
+          <span>Scikit-learn</span>
+          <span>Pandas</span>
+          <span>Flask</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card">
+      <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="BidHive" class="project-image">
+      <div class="project-overlay">
+        <h3>BidHive</h3>
+        <p>Full-stack B2B tender management platform using Supabase, JWT auth, Next.js UI, company profiles, tender creation, and proposal tracking.</p>
+        <div class="project-links">
+          <a href="https://piyush-0021-github-io.vercel.app"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+          <a href="https://github.com/Piyush-0021/bidhive"><i class="fab fa-github"></i> Source Code</a>
+        </div>
+      </div>
+      <div class="project-content">
+        <h3>📈 BidHive</h3>
+        <p>Enterprise-grade tender management system for businesses</p>
+        <div class="project-tech">
+          <span>Next.js</span>
+          <span>Supabase</span>
+          <span>JWT</span>
+          <span>Tailwind CSS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact">
+  <div class="section-title">
+    <h2><span>04.</span> Get In Touch</h2>
+  </div>
+  <div class="contact-container">
+    <div class="contact-info">
+      <h3>Let's talk about your project</h3>
+      <p>I'm currently looking for new opportunities, my inbox is always open. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
+      <div class="contact-details">
+        <div class="contact-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>New Delhi, India</span>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <span>guptapiyush2105@gmail.com</span>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/Piyush-0021/Piyush-0021.github.io" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/piyush-gupta-bab9b7292/?originalSubdomain=in" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://twitter.com/Piyush85369406" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com/piyush_gupta021/" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-instagram" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+    <div class="contact-form">
+      <form action="https://formspree.io/f/xeokybrp" method="POST" id="contactForm">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="text" name="subject" placeholder="Subject">
+        <textarea name="message" placeholder="Your Message" required></textarea>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>Designed & Built by <a href="#">Piyush Gupta</a></p>
+  <p>&copy; 2025 All Rights Reserved</p>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+  // Mobile Menu Toggle
+  const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+  const navLinks = document.querySelector('.nav-links');
+
+  mobileMenuBtn.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
+      '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+  });
+
+  // Close mobile menu when clicking on a link
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+      mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    });
+  });
+
+  // Sticky navbar on scroll
+  window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Active link highlighting
+  const sections = document.querySelectorAll('section');
+  const navItems = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      
+      if (pageYOffset >= sectionTop - 300) {
+        current = section.getAttribute('id');
+      }
+    });
+    
+    navItems.forEach(item => {
+      item.classList.remove('active');
+      if (item.getAttribute('href') === `#${current}`) {
+        item.classList.add('active');
+      }
+    });
+  });
+
+  // Scroll to section
+  document.querySelector('.scroll-indicator').addEventListener('click', () => {
+    document.querySelector('#about').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Initialize particles.js
+  particlesJS("particles-js", {
+    "particles": {
+      "number": {
+        "value": 80,
+        "density": {
+          "enable": true,
+          "value_area": 800
+        }
+      },
+      "color": {
+        "value": "#00ffe7"
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
+        },
+        "polygon": {
+          "nb_sides": 5
+        }
+      },
+      "opacity": {
+        "value": 0.5,
+        "random": false,
+        "anim": {
+          "enable": false,
+          "speed": 1,
+          "opacity_min": 0.1,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 3,
+        "random": true,
+        "anim": {
+          "enable": false,
+          "speed": 40,
+          "size_min": 0.1,
+          "sync": false
+        }
+      },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#00ffe7",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 2,
+        "direction": "none",
+        "random": false,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": false,
+        "attract": {
+          "enable": false,
+          "rotateX": 600,
+          "rotateY": 1200
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": true,
+          "mode": "grab"
+        },
+        "onclick": {
+          "enable": true,
+          "mode": "push"
+        },
+        "resize": true
+      },
+      "modes": {
+        "grab": {
+          "distance": 140,
+          "line_linked": {
+            "opacity": 1
+          }
+        },
+        "bubble": {
+          "distance": 400,
+          "size": 40,
+          "duration": 2,
+          "opacity": 8,
+          "speed": 3
+        },
+        "repulse": {
+          "distance": 200,
+          "duration": 0.4
+        },
+        "push": {
+          "particles_nb": 4
+        },
+        "remove": {
+          "particles_nb": 2
+        }
+      }
+    },
+    "retina_detect": true
+  });
+
+  // Matrix-style Code Rain Effect
+  const canvas = document.getElementById('code-canvas');
+  const ctx = canvas.getContext('2d');
+  
+  // Set canvas size
+  function resizeCanvas() {
+    const container = document.getElementById('hologram-container');
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
+  }
+  
+  // Initial resize
+  resizeCanvas();
+  
+  // Handle window resize
+  window.addEventListener('resize', resizeCanvas);
+  
+  // Characters - using coding-related symbols
+  const chars = "01{}[]();:<>?/!@#$%^&*-+=|\\~`πλΣΩθφψ∞÷×{}[]()<>;:'\".,?!@#$%^&*-+=|\\~`";
+  
+  // Font size
+  const fontSize = 14;
+  
+  // Columns
+  const columns = canvas.width / fontSize;
+  
+  // Array of drops - one per column
+  const drops = [];
+  for (let i = 0; i < columns; i++) {
+    drops[i] = 1;
+  }
+  
+  // Drawing the characters
+  function draw() {
+    // Black background with alpha to create trail effect
+    ctx.fillStyle = 'rgba(10, 25, 47, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Set style for characters
+    ctx.fillStyle = '#00ffe7';
+    ctx.font = fontSize + 'px monospace';
+    
+    // Loop over drops
+    for (let i = 0; i < drops.length; i++) {
+      // Random character
+      const text = chars[Math.floor(Math.random() * chars.length)];
+      
+      // Draw character
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      
+      // Reset drop at random intervals
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      
+      // Move drop down
+      drops[i]++;
+    }
+  }
+  
+  // Run animation
+  setInterval(draw, 33);
+  
+  // 3D Hologram Effect with Mouse/Touch Interaction
+  const hologramContainer = document.getElementById('hologram-container');
+  let scene, camera, renderer, object;
+  let mouseX = 0, mouseY = 0;
+  let targetX = 0, targetY = 0;
+  let windowHalfX = window.innerWidth / 2;
+  let windowHalfY = window.innerHeight / 2;
+
+  function init3DHologram() {
+    // Only initialize if screen is large enough
+    if (window.innerWidth < 768) {
+      return; // Skip 3D on mobile
+    }
+    
+    // Create scene
+    scene = new THREE.Scene();
+    scene.background = null;
+    
+    // Create camera
+    camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
+    camera.position.z = 5;
+    
+    // Create renderer
+    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setSize(hologramContainer.clientWidth, hologramContainer.clientHeight);
+    hologramContainer.insertBefore(renderer.domElement, hologramContainer.firstChild);
+    
+    // Add lights
+    const ambientLight = new THREE.AmbientLight(0x00ffff, 0.5);
+    scene.add(ambientLight);
+    
+    const directionalLight = new THREE.DirectionalLight(0x00ffff, 0.8);
+    directionalLight.position.set(1, 1, 1);
+    scene.add(directionalLight);
+    
+    // Create coding-themed object - a cube with code texture
+    const geometry = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+    
+    // Create a texture with code
+    const canvasTexture = document.createElement('canvas');
+    canvasTexture.width = 512;
+    canvasTexture.height = 512;
+    const ctxTexture = canvasTexture.getContext('2d');
+    ctxTexture.fillStyle = 'rgba(10, 25, 47, 0.8)';
+    ctxTexture.fillRect(0, 0, canvasTexture.width, canvasTexture.height);
+    ctxTexture.font = '14px monospace';
+    ctxTexture.fillStyle = '#00ffe7';
+    
+    const codeLines = [
+      "function helloWorld() {",
+      "  console.log('Hello!');",
+      "  return 42;",
+      "}",
+      "class Developer {",
+      "  constructor(name) {",
+      "    this.name = name;",
+      "    this.skills = [];",
+      "  }",
+      "  code() { /*...*/ }",
+      "}",
+      "const dev = new Developer();",
+      "dev.code();"
+    ];
+    
+    for (let i = 0; i < codeLines.length; i++) {
+      ctxTexture.fillText(codeLines[i], 10, 20 + i * 20);
+    }
+    
+    const texture = new THREE.CanvasTexture(canvasTexture);
+    
+    const material = new THREE.MeshPhongMaterial({
+      map: texture,
+      color: 0x00ffff,
+      shininess: 100,
+      transparent: true,
+      opacity: 0.9,
+      emissive: 0x00ffff,
+      emissiveIntensity: 0.3,
+      wireframe: false
+    });
+    
+    object = new THREE.Mesh(geometry, material);
+    scene.add(object);
+    
+    // Add wireframe for better hologram effect
+    const wireframe = new THREE.LineSegments(
+      new THREE.EdgesGeometry(geometry),
+      new THREE.LineBasicMaterial({ color: 0x00ffff, transparent: true, opacity: 0.5 })
+    );
+    object.add(wireframe);
+    
+    // Mouse move event for interaction
+    document.addEventListener('mousemove', onDocumentMouseMove);
+    
+    // Touch events for mobile
+    document.addEventListener('touchstart', onDocumentTouchStart);
+    document.addEventListener('touchmove', onDocumentTouchMove);
+    
+    // Handle window resize
+    window.addEventListener('resize', onWindowResize);
+    
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      // Smooth follow mouse movement
+      targetX = mouseX * 0.05;
+      targetY = mouseY * 0.05;
+      
+      object.rotation.x += 0.005;
+      object.rotation.y += 0.01;
+      
+      // Add mouse interaction rotation
+      object.rotation.y += (targetX - object.rotation.y) * 0.1;
+      object.rotation.x += (targetY - object.rotation.x) * 0.1;
+      
+      renderer.render(scene, camera);
+    }
+    
+    animate();
+  }
+
+  function onDocumentMouseMove(event) {
+    mouseX = (event.clientX - windowHalfX) / 50;
+    mouseY = (event.clientY - windowHalfY) / 50;
+  }
+
+  function onDocumentTouchStart(event) {
+    if (event.touches.length === 1) {
+      event.preventDefault();
+      mouseX = (event.touches[0].pageX - windowHalfX) / 50;
+      mouseY = (event.touches[0].pageY - windowHalfY) / 50;
+    }
+  }
+
+  function onDocumentTouchMove(event) {
+    if (event.touches.length === 1) {
+      event.preventDefault();
+      mouseX = (event.touches[0].pageX - windowHalfX) / 50;
+      mouseY = (event.touches[0].pageY - windowHalfY) / 50;
+    }
+  }
+
+  function onWindowResize() {
+    windowHalfX = window.innerWidth / 2;
+    windowHalfY = window.innerHeight / 2;
+    
+    if (camera && renderer) {
+      camera.aspect = hologramContainer.clientWidth / hologramContainer.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(hologramContainer.clientWidth, hologramContainer.clientHeight);
+    }
+  }
+
+  // Initialize 3D hologram if container exists
+  if (hologramContainer) {
+    init3DHologram();
+  }
+
+  // Typed.js initialization
+  var typed = new Typed('#typed-output', {
+    strings: ["I build things for the web.", "I love solving problems.", "I develop responsive websites."],
+    typeSpeed: 50,
+    backSpeed: 30,
+    backDelay: 1500,
+    loop: true
+  });
+
+  // Form submission handler
+  const form = document.getElementById("contactForm");
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const data = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        alert("Thank you! Your message has been sent.");
+        form.reset();
+      } else {
+        throw new Error('Network response was not ok');
+      }
+    } catch (error) {
+      alert("Oops! Something went wrong. Please try again.");
+      console.error('Error:', error);
+    }
+  });
+
+  // GSAP animations for scroll effects
+  gsap.registerEffect({
+    name: "fadeIn",
+    effect: (targets, config) => {
+      return gsap.from(targets, {
+        opacity: 0,
+        y: 20,
+        duration: 1,
+        ease: "power2.out",
+        stagger: 0.2,
+        ...config
+      });
+    },
+    defaults: {duration: 1},
+    extendTimeline: true
+  });
+
+  // Animate sections on scroll
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "section",
+      start: "top 80%",
+      toggleActions: "play none none none"
+    }
+  });
+
+  document.querySelectorAll("section").forEach((section, i) => {
+    tl.fadeIn(section.querySelectorAll(".section-title, .about-content, .skills-container, .projects-container, .contact-container"), {
+      delay: i * 0.2
+    });
+  });
+</script>
+<script>
+  document.addEventListener('contextmenu', event => event.preventDefault());
+  document.onkeydown = function(e) {
+    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === 'I')) return false;
+  };
+</script>
+
+</body>
+</html>
