@@ -2,6 +2,8 @@
 
 Welcome to my portfolio! I’m a passionate full-stack developer with a strong foundation in web development, machine learning, and cloud technologies. I specialize in building responsive, dynamic, and user-focused applications that solve real-world problems.
 
+🔗 Live Demo: https://piyush21.netlify.app
+
 
 💼 What I Build:
 Interactive Web Platforms using React.js, Next.js, and Tailwind CSS
