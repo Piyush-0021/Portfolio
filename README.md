@@ -12,7 +12,9 @@ End-to-End Cloud Deployments using IBM Cloud, Vercel, and Supabase
 
 🔥 Featured Projects:
 FitLife – A comprehensive fitness platform (built with PHP) featuring workout plans, yoga schedules, and personalized health guidance.
+
 Movie Recommender – An unsupervised machine learning system using KMeans and genre parsing to recommend Indian movies.
+
 BidHive – A full-stack B2B tender management system with company registration, tender workflows, JWT authentication, and Supabase backend.
 
 
